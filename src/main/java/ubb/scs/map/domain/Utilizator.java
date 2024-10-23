@@ -1,26 +1,22 @@
-package main.java.ubb.scs.map.domain;
+package ubb.scs.map.domain;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Utilizator extends Entity<Long>{
-    private String firstName;
-    private String lastName;
-    private List<Utilizator> friends;
+    @JsonProperty("first_name")
+    protected String firstName;
+    @JsonProperty("last_name")
+    protected String lastName;
+
+    private Utilizator(){}
 
     public Utilizator(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.friends = new ArrayList<>();
-    }
-
-    public List<Utilizator> getFriends() {
-        return friends;
-    }
-
-    public void addFriend(Utilizator friend) {
-        friends.add(friend);
     }
 
     public String getFirstName() {
@@ -44,7 +40,6 @@ public class Utilizator extends Entity<Long>{
         return "Utilizator{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", friends=" +
                 '}';
     }
 

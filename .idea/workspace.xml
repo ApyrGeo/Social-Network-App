@@ -4,15 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3849faae-8726-4b9e-821c-4cf5d402f8ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Prietenie.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Tuple.java" afterDir="false" />
+    <list default="true" id="3849faae-8726-4b9e-821c-4cf5d402f8ae" name="Changes" comment="Update">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/data/prietenii.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/data/prietenii.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/data/utilizatori.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/data/utilizatori.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/UtilizatorExtended.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/PrietenieValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/database/UtilizatorDbRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/file/PrietenieRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/service/Service.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/utils/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/utilizatori.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Prietenie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Prietenie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Tuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Tuple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Utilizator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/Utilizator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/UtilizatorValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/UtilizatorValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/ValidationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/ValidationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/domain/validators/Validator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/Repository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/file/AbstractFileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/file/AbstractFileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/file/UtilizatorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/file/UtilizatorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/memory/InMemoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/memory/InMemoryRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="DISPLAY_NOTIFICATION_POPUP" value="false" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -34,12 +63,28 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ApyrGeo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ApyrGeo/Social-Network-App.git&quot;,
+    &quot;accountId&quot;: &quot;37406048-6890-47aa-bf4c-d3587e899065&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/ubb/scs/map/repository/file/AbstractFileRepository.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -57,26 +102,52 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Application.RUN.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.Lab3 [:ubb.scs.map.Main.main()].executor": "Run",
+    "Gradle.Lab3.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/lauradiana/Desktop/MAP 2024-2025/curs3",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "D:/01 MAP/workspace/curs3/src/main/java/ubb/scs/map/Main.java",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.RUN">
+    <configuration name="RUN" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
+      <option name="MAIN_CLASS_NAME" value="ubb.scs.map.Main" />
+      <module name="curs3.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ubb.scs.map.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.ubb.scs.map.Main" />
       <module name="Lab3" />
@@ -84,6 +155,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -95,10 +174,46 @@
       <updated>1728889381366</updated>
       <workItem from="1728889382404" duration="32000" />
       <workItem from="1728929925440" duration="2642000" />
+      <workItem from="1729197537704" duration="11000" />
+      <workItem from="1729430813443" duration="771000" />
+      <workItem from="1729501847120" duration="2410000" />
+      <workItem from="1729573331136" duration="92000" />
+      <workItem from="1729596114301" duration="9407000" />
+      <workItem from="1729608725310" duration="916000" />
+      <workItem from="1729619221007" duration="9712000" />
+      <workItem from="1729659517402" duration="5166000" />
     </task>
+    <task id="LOCAL-00001" summary="Update">
+      <option name="closed" value="true" />
+      <created>1728973742667</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728973742667</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

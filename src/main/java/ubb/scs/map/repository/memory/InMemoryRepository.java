@@ -1,9 +1,9 @@
-package main.java.ubb.scs.map.repository.memory;
+package ubb.scs.map.repository.memory;
 
-import main.java.ubb.scs.map.domain.Entity;
-import main.java.ubb.scs.map.domain.validators.ValidationException;
-import main.java.ubb.scs.map.domain.validators.Validator;
-import main.java.ubb.scs.map.repository.Repository;
+import ubb.scs.map.domain.Entity;
+import ubb.scs.map.domain.validators.ValidationException;
+import ubb.scs.map.domain.validators.Validator;
+import ubb.scs.map.repository.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +35,7 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     public E save(E entity) throws ValidationException {
         if(entity==null)
             throw new IllegalArgumentException("ENTITY CANNOT BE NULL");
+
         validator.validate(entity);
         if(entities.containsKey(entity.getId()))
             return entity;

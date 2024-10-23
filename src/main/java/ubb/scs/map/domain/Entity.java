@@ -1,7 +1,10 @@
-package main.java.ubb.scs.map.domain;
+package ubb.scs.map.domain;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Entity<ID>  {
 
+    @JsonProperty("id")
     private ID id;
     public ID getId() {
         return id;

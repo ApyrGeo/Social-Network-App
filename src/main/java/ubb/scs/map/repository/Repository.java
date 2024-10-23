@@ -1,8 +1,8 @@
-package main.java.ubb.scs.map.repository;
+package ubb.scs.map.repository;
 
 
-import main.java.ubb.scs.map.domain.Entity;
-import main.java.ubb.scs.map.domain.validators.ValidationException;
+import ubb.scs.map.domain.Entity;
+import ubb.scs.map.domain.validators.ValidationException;
 
 /**
  * CRUD operations repository interface

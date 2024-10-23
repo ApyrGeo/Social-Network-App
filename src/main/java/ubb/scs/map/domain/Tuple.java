@@ -1,10 +1,14 @@
-package main.java.ubb.scs.map.domain;
+package ubb.scs.map.domain;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
 public class Tuple<E1, E2> {
-    private E1 e1;
-    private E2 e2;
+
+    protected E1 e1;
+
+    protected E2 e2;
 
     public Tuple(E1 e1, E2 e2) {
         this.e1 = e1;
@@ -26,7 +30,7 @@ public class Tuple<E1, E2> {
 
     @Override
     public String toString() {
-        return e1 + ",5" + e2;
+        return e1 + "," + e2;
     }
 
     @Override

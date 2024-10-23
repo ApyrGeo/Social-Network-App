@@ -1,13 +1,15 @@
-package main.java.ubb.scs.map.domain.validators;
+package ubb.scs.map.domain.validators;
 
 
-import main.java.ubb.scs.map.domain.Utilizator;
+import ubb.scs.map.domain.Utilizator;
 
 public class UtilizatorValidator implements Validator<Utilizator> {
     @Override
     public void validate(Utilizator entity) throws ValidationException {
-        //TODO: implement method validate
-        if(entity.getFirstName().equals(""))
-            throw new ValidationException("Utilizatorul nu este valid");
+        if(entity.getFirstName().isEmpty())
+            throw new ValidationException("Prenume invalid");
+
+        if(entity.getLastName().isEmpty())
+            throw new ValidationException("Nume invalid");
     }
 }
