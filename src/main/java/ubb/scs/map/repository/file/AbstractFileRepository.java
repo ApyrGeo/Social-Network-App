@@ -1,26 +1,17 @@
 package ubb.scs.map.repository.file;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import jdk.jshell.execution.Util;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 import ubb.scs.map.domain.Entity;
-import ubb.scs.map.domain.Utilizator;
+import ubb.scs.map.domain.exceptions.RepositoryException;
 import ubb.scs.map.domain.validators.Validator;
 import ubb.scs.map.repository.memory.InMemoryRepository;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
-import org.json.simple.parser.JSONParser;
-
-
-public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends InMemoryRepository<ID, E>{
+public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends InMemoryRepository<ID,E> {
     protected final String filename;
 
     public AbstractFileRepository(Validator<E> validator, String fileName) {
@@ -29,11 +20,15 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
         loadData();
     }
 
-
+    /**
+     * Function that maps the values from the .json format to the specific Object type
+     * @return list of entities parsed from the file
+     * @throws IOException if an error occurred
+     */
     public abstract List<E> createEntities();
     //public abstract JSONObject saveEntity(E entity);
     @Override
-    public E findOne(ID id) {
+    public Optional<E> findOne(ID id) {
         return super.findOne(id);
     }
 
@@ -43,28 +38,50 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
     }
 
     @Override
-    public E save(E entity) {
-        E e = super.save(entity);
-        if (e == null)
+    public Optional<E> save(E entity) {
+        Optional<E> e = super.save(entity);
+        if (e.isEmpty())
             writeToFile();
         return e;
     }
 
-//    private void loadData(){
-//        try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
-//            String line;
-//            while((line = reader.readLine()) != null){
-//                E entity = createEntity(line);
-//                super.save(entity); // nu e this.save() pt ca nu vrem sa salvam in file in timp ce cititm din file
-//            }
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//    }
-
-    private void loadData(){
+    /**
+     * Function that loads data from file, by creating the entities and saving each one in the repo list
+     */
+    private void loadData() {
         List<E> l = createEntities();
         l.forEach(super::save);
+    }
+
+    /**
+     * Function that writes to file the repo entities
+     */
+    private void writeToFile() {
+        try {
+            new ObjectMapper().writeValue(new File(filename), entities.values());
+        } catch (IOException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    @Override
+    public Optional<E> delete(ID id) {
+        Optional<E> deleted = super.delete(id);
+
+        if(deleted.isPresent())
+            writeToFile();
+
+        return deleted;
+    }
+
+    @Override
+    public Optional<E> update(E entity) {
+        Optional<E> updated = super.update(entity);
+
+        if(updated.isEmpty())
+            writeToFile();
+
+        return updated;
     }
 
 //    private void writeToFile() {
@@ -79,32 +96,15 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
 //            throw new RuntimeException(e);
 //        }
 //    }
-    private void writeToFile() {
-    try {
-        new ObjectMapper().writeValue(new File(filename), entities.values());
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
-}
-
-    @Override
-    public E delete(ID id) {
-        E deleted = super.delete(id);
-
-        if(deleted != null)
-            writeToFile();
-
-        return deleted;
-    }
-
-    @Override
-    public E update(E entity) {
-        E updated = super.update(entity);
-
-        if(updated == null)
-            writeToFile();
-
-        return updated;
-    }
-
+//    private void loadData(){
+//        try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
+//            String line;
+//            while((line = reader.readLine()) != null){
+//                E entity = createEntity(line);
+//                super.save(entity); // nu e this.save() pt ca nu vrem sa salvam in file in timp ce cititm din file
+//            }
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+//    }
 }

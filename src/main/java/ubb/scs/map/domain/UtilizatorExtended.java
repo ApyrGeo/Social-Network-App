@@ -2,12 +2,13 @@ package ubb.scs.map.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UtilizatorExtended extends Utilizator {
     private List<Utilizator> prieteni;
-    public UtilizatorExtended(Utilizator utilizator, List<Utilizator> prieteni) {
-        super(utilizator.getFirstName(), utilizator.getLastName());
-        super.setId(utilizator.getId());
+    public UtilizatorExtended(Optional<Utilizator> utilizator, List<Utilizator> prieteni) {
+        super(utilizator.get().getFirstName(), utilizator.get().getLastName());
+        super.setId(utilizator.get().getId());
         this.prieteni = prieteni;
     }
     public List<Utilizator> getPrieteni() {
@@ -20,6 +21,7 @@ public class UtilizatorExtended extends Utilizator {
     @Override
     public String toString() {
         return "Utilizator{" +
+                "id='" + getId() + '\'' +
                 "firstName='" + super.firstName + '\'' +
                 ", lastName='" + super.lastName + '\'' +
                 ", friends=" + prieteni +

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.json.JSONObject;
 import ubb.scs.map.domain.Utilizator;
+import ubb.scs.map.domain.exceptions.RepositoryException;
 import ubb.scs.map.domain.validators.Validator;
 import ubb.scs.map.repository.file.AbstractFileRepository;
 
@@ -19,20 +20,28 @@ public class UtilizatorRepository extends AbstractFileRepository<Long, Utilizato
         super(validator, fileName);
     }
 
-//    @Override
-//    public Utilizator createEntity(String line) {
-//        String[] splited = line.split(";");
-//        Utilizator u = new Utilizator(splited[1], splited[2]);
-//        u.setId(Long.parseLong(splited[0]));
-//        return u;
-//    }
     @Override
     public List<Utilizator> createEntities() {
         try{
             return new ObjectMapper().readValue(new File(super.filename), new TypeReference<List<Utilizator>>() {});
         }catch (IOException e){
-            throw new RuntimeException(e);
+            throw new RepositoryException(e);
         }
+    }
+
+    /**
+     * FUnction used for auto incrementing
+     * @return the biggest id
+     */
+    public Long getLastId(){
+        Long result = -1L;
+        for(Long e : entities.keySet()){
+            if( e > result ){
+                result = e;
+            }
+        }
+
+        return result;
     }
 
 //   public String saveEntity(Utilizator entity) {
@@ -49,14 +58,12 @@ public class UtilizatorRepository extends AbstractFileRepository<Long, Utilizato
 //
 //        return result;
 //    }
-    public Long getLastId(){
-        Long result = -1L;
-        for(Long e : entities.keySet()){
-            if( e > result ){
-                result = e;
-            }
-        }
 
-        return result;
-    }
+//    @Override
+//    public Utilizator createEntity(String line) {
+//        String[] splited = line.split(";");
+//        Utilizator u = new Utilizator(splited[1], splited[2]);
+//        u.setId(Long.parseLong(splited[0]));
+//        return u;
+//    }
 }

@@ -5,6 +5,7 @@ import ubb.scs.map.repository.Repository;
 
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class UtilizatorDbRepository implements Repository<Long, Utilizator>{
@@ -19,8 +20,8 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator>{
     }
 
     @Override
-    public Utilizator findOne(Long id) {
-        return null;
+    public Optional<Utilizator> findOne(Long id) {
+        return Optional.empty();
     }
 
     @Override
@@ -47,7 +48,7 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator>{
     }
 
     @Override
-    public Utilizator save(Utilizator entity) {
+    public Optional<Utilizator> save(Utilizator entity) {
 
         try(Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement statement = connection.prepareStatement("INSERT INTO users(firs_name, last_name) VALUES(?,?)");
@@ -58,17 +59,17 @@ public class UtilizatorDbRepository implements Repository<Long, Utilizator>{
                 int rez = statement.executeUpdate();
                 return null; //empty cand se schimba la Optional<>
         } catch (SQLException e) {
-            return entity;
+            return Optional.ofNullable(entity);
         }
     }
 
     @Override
-    public Utilizator delete(Long id) {
-        return null;
+    public Optional<Utilizator> delete(Long id) {
+        return Optional.empty();
     }
 
     @Override
-    public Utilizator update(Utilizator entity) {
-        return null;
+    public Optional<Utilizator> update(Utilizator entity) {
+        return Optional.empty();
     }
 }

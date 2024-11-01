@@ -23,4 +23,6 @@ public class Prietenie extends Entity<Long>{
     public Long getIdPrieten2() {
         return idPrieten2;
     }
+
+
 }

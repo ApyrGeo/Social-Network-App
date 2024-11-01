@@ -2,6 +2,7 @@ package ubb.scs.map.domain.validators;
 
 
 import ubb.scs.map.domain.Utilizator;
+import ubb.scs.map.domain.exceptions.ValidationException;
 
 public class UtilizatorValidator implements Validator<Utilizator> {
     @Override
