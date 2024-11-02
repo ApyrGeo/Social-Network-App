@@ -4,18 +4,18 @@ import ubb.scs.map.domain.Prietenie;
 import ubb.scs.map.domain.Utilizator;
 import ubb.scs.map.domain.UtilizatorExtended;
 import ubb.scs.map.domain.exceptions.ServiceException;
-import ubb.scs.map.repository.file.PrietenieRepository;
-import ubb.scs.map.repository.file.UtilizatorRepository;
+import ubb.scs.map.repository.database.PrietenieDbRepository;
+import ubb.scs.map.repository.database.UtilizatorDbRepository;
 import ubb.scs.map.utils.Graph;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Service {
-    private final UtilizatorRepository utilizatorRepository;
-    private final PrietenieRepository prietenieRepository;
+    private final UtilizatorDbRepository utilizatorRepository;
+    private final PrietenieDbRepository prietenieRepository;
 
-    public Service(UtilizatorRepository utilizatorRepository, PrietenieRepository prietenieRepository) {
+    public Service(UtilizatorDbRepository utilizatorRepository, PrietenieDbRepository prietenieRepository) {
         this.utilizatorRepository = utilizatorRepository;
         this.prietenieRepository = prietenieRepository;
     }
@@ -43,7 +43,6 @@ public class Service {
 
         prietenieRepository.findAll().forEach(p -> {
             if(Objects.equals(p.getIdPrieten1(), id) || Objects.equals(p.getIdPrieten2(), id))
-
                 prietenieRepository.delete(p.getId());
         });
     }
@@ -90,7 +89,8 @@ public class Service {
      * @throws ServiceException if the user does not exist
      */
     public UtilizatorExtended getUtilizator(Long id) {
-        if(utilizatorRepository.findOne(id).isEmpty())
+        Optional<Utilizator> utilizator = utilizatorRepository.findOne(id);
+        if(utilizator.isEmpty())
             throw new ServiceException("Id not found");
 
         List<Utilizator> prieteni = new ArrayList<>();
@@ -98,18 +98,20 @@ public class Service {
         prietenieRepository.findAll().forEach(p -> {
 
             if(Objects.equals(id, p.getIdPrieten2())) {
-                if (utilizatorRepository.findOne(p.getIdPrieten1()).isEmpty())
+                Optional<Utilizator> friend1 = utilizatorRepository.findOne(p.getIdPrieten1());
+                if (friend1.isEmpty())
                     throw new ServiceException("Prietenia nu exista");
-                prieteni.add(utilizatorRepository.findOne(p.getIdPrieten1()).get());
+                prieteni.add(friend1.get());
             }
             else if (Objects.equals(id, p.getIdPrieten1())) {
-                if (utilizatorRepository.findOne(p.getIdPrieten2()).isEmpty())
+                Optional<Utilizator> friend2 = utilizatorRepository.findOne(p.getIdPrieten2());
+                if (friend2.isEmpty())
                     throw new ServiceException("Prietenia nu exista");
-                prieteni.add(utilizatorRepository.findOne(p.getIdPrieten2()).get());
+                prieteni.add(friend2.get());
             }
         });
 
-        return new UtilizatorExtended(utilizatorRepository.findOne(id), prieteni);
+        return new UtilizatorExtended(utilizator, prieteni);
     }
 
     /**
@@ -120,10 +122,11 @@ public class Service {
         List<UtilizatorExtended> to_return = new ArrayList<>();
 
         utilizatorRepository.findAll().forEach(p -> {
-            if (utilizatorRepository.findOne(p.getId()).isEmpty())
+            Optional<Utilizator> utilizator = utilizatorRepository.findOne(p.getId());
+            if (utilizator.isEmpty())
                 throw new ServiceException("Id not found");
 
-            Utilizator u = utilizatorRepository.findOne(p.getId()).get();
+            Utilizator u = utilizator.get();
             to_return.add(getUtilizator(u.getId()));
         });
 
@@ -138,14 +141,16 @@ public class Service {
     public List<String> getPrietenii(){
         List<String> to_return = new ArrayList<>();
         prietenieRepository.findAll().forEach(p -> {
-            if (utilizatorRepository.findOne(p.getIdPrieten1()).isEmpty() || utilizatorRepository.findOne(p.getIdPrieten2()).isEmpty())
+            Optional<Utilizator> friend1 = utilizatorRepository.findOne(p.getIdPrieten1());
+            Optional<Utilizator> friend2 = utilizatorRepository.findOne(p.getIdPrieten2());
+            if (friend1.isEmpty() || friend2.isEmpty())
                 throw new ServiceException("Prietenia nu exista");
 
             to_return.add(p.getId().toString()
                     .concat(" : ")
-                    .concat(utilizatorRepository.findOne(p.getIdPrieten1()).get().getLastName())
+                    .concat(friend1.get().getLastName())
                     .concat(" <--> ")
-                    .concat(utilizatorRepository.findOne(p.getIdPrieten2()).get().getLastName()));
+                    .concat(friend2.get().getLastName()));
         });
         return to_return;
     }

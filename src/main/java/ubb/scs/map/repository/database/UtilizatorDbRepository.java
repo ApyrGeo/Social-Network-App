@@ -1,5 +1,6 @@
 package ubb.scs.map.repository.database;
 
+import jdk.jshell.execution.Util;
 import ubb.scs.map.domain.Utilizator;
 import ubb.scs.map.repository.Repository;
 
@@ -8,68 +9,60 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class UtilizatorDbRepository implements Repository<Long, Utilizator>{
-    private final String url;
-    private final String username;
-    private final String password;
+public class UtilizatorDbRepository extends AbstractDbRepository<Utilizator> {
 
-    public UtilizatorDbRepository(String url, String username, String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
+    public UtilizatorDbRepository(String url, String user, String password) {
+        super(url, user, password);
     }
 
     @Override
-    public Optional<Utilizator> findOne(Long id) {
-        return Optional.empty();
+    public Utilizator createEntity(ResultSet rs) throws SQLException {
+        Long id = rs.getLong("id");
+        String first_name = rs.getString("first_name");
+        String last_name = rs.getString("last_name");
+
+        Utilizator utilizator = new Utilizator(first_name, last_name);
+        utilizator.setId(id);
+        return utilizator;
     }
 
     @Override
-    public Iterable<Utilizator> findAll() {
-        Set<Utilizator> users = new HashSet<>();
-        try(Connection connection = DriverManager.getConnection(url, username, password)){
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM utilizator");
-            ResultSet resultSet = statement.executeQuery();
+    public PreparedStatement findOneStatement(Connection connection, Long id) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
+        ps.setLong(1, id);
 
-            while(resultSet.next()){
-                Long id = resultSet.getLong("id");
-                String first_name = resultSet.getString("first_name");
-                String last_name = resultSet.getString("last_name");
-
-                Utilizator u = new Utilizator(first_name, last_name);
-                u.setId(id);
-
-                users.add(u);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return users;
+        return ps;
     }
 
     @Override
-    public Optional<Utilizator> save(Utilizator entity) {
-
-        try(Connection connection = DriverManager.getConnection(url, username, password);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO users(firs_name, last_name) VALUES(?,?)");
-            ){
-                statement.setString(1, entity.getFirstName());
-                statement.setString(2, entity.getLastName());
-
-                int rez = statement.executeUpdate();
-                return null; //empty cand se schimba la Optional<>
-        } catch (SQLException e) {
-            return Optional.ofNullable(entity);
-        }
+    public PreparedStatement findAllStatement(Connection connection) throws SQLException {
+        return connection.prepareStatement("SELECT * FROM users");
     }
 
     @Override
-    public Optional<Utilizator> delete(Long id) {
-        return Optional.empty();
+    public PreparedStatement saveStatement(Connection connection, Utilizator entity) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO users (first_name, last_name) VALUES (?, ?)");
+        ps.setString(1, entity.getFirstName());
+        ps.setString(2, entity.getLastName());
+
+        return ps;
     }
 
     @Override
-    public Optional<Utilizator> update(Utilizator entity) {
-        return Optional.empty();
+    public PreparedStatement deleteStatement(Connection connection, Long id) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?");
+        ps.setLong(1, id);
+
+        return ps;
+    }
+
+    @Override
+    public PreparedStatement updateStatement(Connection connection, Utilizator entity) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("UPDATE users SET first_name = ?, last_name = ? WHERE id = ?");
+        ps.setString(1, entity.getFirstName());
+        ps.setString(2, entity.getLastName());
+        ps.setLong(3, entity.getId());
+
+        return ps;
     }
 }
