@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.json.JSONObject;
-import ubb.scs.map.domain.Utilizator;
-import ubb.scs.map.domain.exceptions.RepositoryException;
-import ubb.scs.map.domain.validators.Validator;
-import ubb.scs.map.repository.file.AbstractFileRepository;
+import map.domain.Utilizator;
+import map.domain.exceptions.RepositoryException;
+import map.domain.validators.Validator;
+import map.repository.file.AbstractFileRepository;
 
 import java.io.File;
 import java.io.IOException;

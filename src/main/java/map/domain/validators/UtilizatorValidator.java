@@ -1,8 +1,8 @@
 package map.domain.validators;
 
 
-import ubb.scs.map.domain.Utilizator;
-import ubb.scs.map.domain.exceptions.ValidationException;
+import map.domain.Utilizator;
+import map.domain.exceptions.ValidationException;
 
 public class UtilizatorValidator implements Validator<Utilizator> {
     @Override

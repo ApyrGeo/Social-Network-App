@@ -1,9 +1,10 @@
 package map.repository.database;
 
-import ubb.scs.map.domain.Entity;
-import ubb.scs.map.domain.Prietenie;
-import ubb.scs.map.domain.Utilizator;
-import ubb.scs.map.repository.Repository;
+import map.domain.Entity;
+import map.domain.Prietenie;
+import map.domain.Utilizator;
+import map.domain.validators.Validator;
+import map.repository.Repository;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -11,14 +12,16 @@ import java.util.Optional;
 import java.util.Set;
 
 public abstract class AbstractDbRepository <E extends Entity<Long>> implements Repository<Long, E> {
-    private final String url;
-    private final String username;
-    private final String password;
+    protected final String url;
+    protected final String username;
+    protected final String password;
+    private Validator<E> validator;
 
-    public AbstractDbRepository(String url, String username, String password) {
+    public AbstractDbRepository(String url, String username, String password, Validator<E> validator) {
         this.url = url;
         this.username = username;
         this.password = password;
+        this.validator = validator;
     }
     public abstract E createEntity(ResultSet rs) throws SQLException;
     public abstract PreparedStatement findOneStatement(Connection connection, Long id) throws SQLException;
@@ -62,6 +65,8 @@ public abstract class AbstractDbRepository <E extends Entity<Long>> implements R
 
     @Override
     public Optional<E> save(E entity) {
+        validator.validate(entity);
+
         try(Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement statement = saveStatement(connection, entity) //connection.prepareStatement("INSERT INTO friendships(id1, id2) VALUES(?,?)");
         ){

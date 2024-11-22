@@ -1,7 +1,7 @@
 package map.repository;
 
-import ubb.scs.map.domain.Entity;
-import ubb.scs.map.domain.exceptions.ValidationException;
+import map.domain.Entity;
+import map.domain.exceptions.ValidationException;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      *           id must not be null
      * @return the entity with the specified id
      *          or null - if there is no entity with the given id
-     * @throws ubb.scs.map.domain.exceptions.RepositoryException
+     * @throws map.domain.exceptions.RepositoryException
      *                  if id is null.
      */
     Optional<E> findOne(ID id);
@@ -38,7 +38,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      *         otherwise returns the entity (id already exists)
      * @throws ValidationException
      *            if the entity is not valid
-     * @throws ubb.scs.map.domain.exceptions.RepositoryException
+     * @throws map.domain.exceptions.RepositoryException
      *             if the given entity is null.     *
      */
     Optional<E> save(E entity);
@@ -49,7 +49,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      * @param id
      *      id must be not null
      * @return the removed entity or null if there is no entity with the given id
-     * @throws ubb.scs.map.domain.exceptions.RepositoryException
+     * @throws map.domain.exceptions.RepositoryException
      *                   if the given id is null.
      */
     Optional<E> delete(ID id);
@@ -60,7 +60,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      *          entity must not be null
      * @return null - if the entity is updated,
      *                otherwise  returns the entity  - (e.g. id does not exist).
-     * @throws ubb.scs.map.domain.exceptions.RepositoryException
+     * @throws map.domain.exceptions.RepositoryException
      *             if the given entity is null.
      * @throws ValidationException
      *             if the entity is not valid.

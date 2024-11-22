@@ -1,23 +1,40 @@
 package map.service;
 
-import ubb.scs.map.domain.Prietenie;
-import ubb.scs.map.domain.Utilizator;
-import ubb.scs.map.domain.UtilizatorExtended;
-import ubb.scs.map.domain.exceptions.ServiceException;
-import ubb.scs.map.repository.database.PrietenieDbRepository;
-import ubb.scs.map.repository.database.UtilizatorDbRepository;
-import ubb.scs.map.utils.Graph;
+import map.domain.Prietenie;
+import map.domain.Utilizator;
+import map.domain.UtilizatorExtended;
+import map.domain.exceptions.ServiceException;
+import map.repository.database.PrietenieDbRepository;
+import map.repository.database.UtilizatorDbRepository;
+import map.utils.Graph;
+import map.utils.events.ChangeEventType;
+import map.utils.events.EntityChangeEvent;
+import map.utils.observer.Observable;
+import map.utils.observer.Observer;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Service {
+public class Service implements Observable<EntityChangeEvent> {
     private final UtilizatorDbRepository utilizatorRepository;
     private final PrietenieDbRepository prietenieRepository;
+
+    private List<Observer<EntityChangeEvent>> observers;
 
     public Service(UtilizatorDbRepository utilizatorRepository, PrietenieDbRepository prietenieRepository) {
         this.utilizatorRepository = utilizatorRepository;
         this.prietenieRepository = prietenieRepository;
+        observers = new ArrayList<>();
+    }
+
+    public Utilizator authentificate(String uname, String pass) {
+        Optional<Utilizator> u = utilizatorRepository.findOne(uname, pass);
+        if(u.isEmpty())
+            throw new ServiceException("Invalid username or password");
+
+
+        return u.get();
     }
 
     /**
@@ -25,8 +42,8 @@ public class Service {
      * @param fname first name of user
      * @param lname last name of user
      */
-    public void addUtilizator(String fname, String lname) {
-        Utilizator utilizator = new Utilizator(fname, lname);
+    public void addUtilizator(String fname, String lname, String uname, String pass) {
+        Utilizator utilizator = new Utilizator(fname, lname, uname, pass);
         utilizator.setId(utilizatorRepository.getLastId() + 1);
         utilizatorRepository.save(utilizator);
     }
@@ -38,13 +55,15 @@ public class Service {
      * @throws ServiceException if the user is not found
      */
     public void removeUtilizator(Long id) {
-        if(utilizatorRepository.delete(id).isEmpty())
+        if(utilizatorRepository.findOne(id).isEmpty())
             throw new ServiceException("Id not found");
 
-        prietenieRepository.findAll().forEach(p -> {
-            if(Objects.equals(p.getIdPrieten1(), id) || Objects.equals(p.getIdPrieten2(), id))
-                prietenieRepository.delete(p.getId());
-        });
+//        prietenieRepository.findAll().forEach(p -> {
+//            if(Objects.equals(p.getIdPrieten1(), id) || Objects.equals(p.getIdPrieten2(), id))
+//                prietenieRepository.delete(p.getId());
+//        });
+
+        utilizatorRepository.delete(id);
     }
 
     /**
@@ -53,23 +72,22 @@ public class Service {
      * @param id2 - id of the second user
      * @throws ServiceException if one of the user is not found via the id or if the friendship already exists
      */
-    public void addPrietenie(Long id1, Long id2) {
+    public void addPrietenie(Long id1, Long id2, LocalDateTime from, String status) {
         if (utilizatorRepository.findOne(id1).isEmpty())
             throw new ServiceException("First id not found");
 
         if (utilizatorRepository.findOne(id2).isEmpty())
             throw new ServiceException("Second id not found");
 
-        prietenieRepository.findAll().forEach(p -> {
-            if(Objects.equals(p.getIdPrieten1(), id2) && Objects.equals(p.getIdPrieten2(), id1))
-                throw new ServiceException("Prietenia exista deja");
-            if(Objects.equals(p.getIdPrieten1(), id1) && Objects.equals(p.getIdPrieten2(), id2))
-                throw new ServiceException("Prietenia exista deja");
-        });
+        if (prietenieRepository.findOne(id1,id2).isPresent() ||
+            prietenieRepository.findOne(id2,id1).isPresent())
+            throw new ServiceException("Prietenia exista deja");
 
-        Prietenie p = new Prietenie(id1, id2);
+        Prietenie p = new Prietenie(id1, id2, from, status);
         p.setId(prietenieRepository.getLastId() + 1);
         prietenieRepository.save(p);
+
+        notifyObservers(new EntityChangeEvent(ChangeEventType.ADD, p));
     }
 
     /**
@@ -78,8 +96,12 @@ public class Service {
      * @throws ServiceException if the friendship does not exist
      */
     public void removePrietenie(Long id) {
-        if(prietenieRepository.delete(id).isEmpty())
+        Optional<Prietenie> removed = prietenieRepository.delete(id);
+
+        if(removed.isEmpty())
             throw new ServiceException("Id not found");
+
+        notifyObservers(new EntityChangeEvent(ChangeEventType.DELETE, removed.get()));
     }
 
     /**
@@ -92,6 +114,34 @@ public class Service {
         Optional<Utilizator> utilizator = utilizatorRepository.findOne(id);
         if(utilizator.isEmpty())
             throw new ServiceException("Id not found");
+
+        List<Utilizator> prieteni = new ArrayList<>();
+
+        prietenieRepository.findAll().forEach(p -> {
+
+            if(Objects.equals(id, p.getIdPrieten2())) {
+                Optional<Utilizator> friend1 = utilizatorRepository.findOne(p.getIdPrieten1());
+                if (friend1.isEmpty())
+                    throw new ServiceException("Prietenia nu exista");
+                prieteni.add(friend1.get());
+            }
+            else if (Objects.equals(id, p.getIdPrieten1())) {
+                Optional<Utilizator> friend2 = utilizatorRepository.findOne(p.getIdPrieten2());
+                if (friend2.isEmpty())
+                    throw new ServiceException("Prietenia nu exista");
+                prieteni.add(friend2.get());
+            }
+        });
+
+        return new UtilizatorExtended(utilizator, prieteni);
+    }
+
+    public UtilizatorExtended getUtilizator(String uname){
+        Optional<Utilizator> utilizator = utilizatorRepository.findOne(uname);
+        if(utilizator.isEmpty())
+            throw new ServiceException("User not found");
+
+        Long id = utilizator.get().getId();
 
         List<Utilizator> prieteni = new ArrayList<>();
 
@@ -153,6 +203,20 @@ public class Service {
                     .concat(friend2.get().getLastName()));
         });
         return to_return;
+    }
+
+    public Iterable<Prietenie> getFriendships() {
+        return prietenieRepository.findAll();
+    }
+
+    public Prietenie getPrietenie(Long id1, Long id2) {
+        Optional<Prietenie> p = prietenieRepository.findOne(id1, id2);
+        if(p.isEmpty()) {
+            p = prietenieRepository.findOne(id2, id1);
+            if (p.isEmpty())
+                throw new ServiceException("Prietenia nu exista");
+        }
+        return p.get();
     }
 
     /**
@@ -238,5 +302,28 @@ public class Service {
             visited.put(id, 0);
         });
         return visited;
+    }
+
+    @Override
+    public void addObserver(Observer<EntityChangeEvent> e) {
+        observers.add(e);
+    }
+
+    @Override
+    public void removeObserver(Observer<EntityChangeEvent> e) {
+        observers.remove(e);
+    }
+
+    @Override
+    public void notifyObservers(EntityChangeEvent event) {
+        observers.stream().forEach(x->x.update(event));
+    }
+
+    public void updatePrietenie(Long id, Long id1, Long id2, String newStatus) {
+        Prietenie newP = new Prietenie(id1, id2, LocalDateTime.now(), newStatus);
+        newP.setId(id);
+        prietenieRepository.update(newP);
+
+        notifyObservers(new EntityChangeEvent(ChangeEventType.UPDATE, newP));
     }
 }

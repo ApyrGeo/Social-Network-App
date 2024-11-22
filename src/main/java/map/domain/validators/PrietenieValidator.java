@@ -1,7 +1,7 @@
 package map.domain.validators;
 
-import ubb.scs.map.domain.Prietenie;
-import ubb.scs.map.domain.exceptions.ValidationException;
+import map.domain.Prietenie;
+import map.domain.exceptions.ValidationException;
 
 public class PrietenieValidator implements Validator<Prietenie> {
     @Override

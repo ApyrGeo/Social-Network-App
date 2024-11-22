@@ -1,0 +1,20 @@
+#parent {
+    -fx-background-color: transparent;
+}
+
+.list-view {
+    -fx-background-color: #FFFFC7;
+}
+
+#main {
+    -fx-background-color: #FFFFC7;
+    -fx-min-width: 200;
+    -fx-min-height: 200;
+}
+
+#title {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: #548687;
+}

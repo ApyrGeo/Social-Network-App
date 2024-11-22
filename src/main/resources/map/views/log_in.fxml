@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="main" alignment="center" hgap="10"
+          stylesheets="@../css/log_in.css" vgap="10"
+          xmlns="http://javafx.com/javafx/17.0.12"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="map.controller.LogInController">
+
+
+    <Label fx:id="label" alignment="center" prefHeight="35.0" prefWidth="216.0" text="Login" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+
+    <Label text="Username:" GridPane.rowIndex="1" />
+    <TextField fx:id="usernameField" promptText="Enter Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Password:" GridPane.rowIndex="2" />
+    <PasswordField fx:id="passwordField" promptText="Enter Password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label fx:id="errorLabel" alignment="center" text="Invalid username or password" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+
+    <Button fx:id="button" alignment="center" onAction="#handleLogin" prefHeight="30.0" prefWidth="215.0" text="Login" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+
+    <HBox alignment="center" spacing="5" GridPane.columnSpan="2" GridPane.rowIndex="5">
+        <Label text="Don't have an account?" />
+        <Button fx:id="registerButton" onAction="#handleRegister"  text="Register" />
+    </HBox>
+</GridPane>

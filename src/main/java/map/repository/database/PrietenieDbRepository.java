@@ -1,14 +1,19 @@
 package map.repository.database;
 
-import ubb.scs.map.domain.Entity;
-import ubb.scs.map.domain.Prietenie;
+import map.domain.Entity;
+import map.domain.Prietenie;
+import map.domain.Utilizator;
+import map.domain.validators.PrietenieValidator;
+import map.domain.validators.Validator;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
 
-    public PrietenieDbRepository(String url, String user, String password) {
-        super(url, user, password);
+    public PrietenieDbRepository(String url, String user, String password, Validator<Prietenie> validator) {
+        super(url, user, password, validator);
     }
 
     @Override
@@ -16,8 +21,10 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
         Long id = rs.getLong(1);
         Long id1 = rs.getLong(2);
         Long id2 = rs.getLong(3);
+        LocalDateTime frFrom = rs.getDate(4).toLocalDate().atTime(0,0,0);
+        String status = rs.getString(5);
 
-        Prietenie prietenie = new Prietenie(id1, id2);
+        Prietenie prietenie = new Prietenie(id1, id2, frFrom, status);
         prietenie.setId(id);
         return prietenie;
     }
@@ -37,9 +44,12 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
 
     @Override
     public PreparedStatement saveStatement(Connection connection, Prietenie prietenie) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO friendships(id1,id2) VALUES (?,?)");
+
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO friendships(id1,id2,friends_from,status) VALUES (?,?,?,?)");
         ps.setLong(1, prietenie.getIdPrieten1());
         ps.setLong(2, prietenie.getIdPrieten2());
+        ps.setDate(3, Date.valueOf(prietenie.getFriendsFrom().toLocalDate()));
+        ps.setString(4, prietenie.getStatus());
 
         return ps;
     }
@@ -54,11 +64,33 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
 
     @Override
     public PreparedStatement updateStatement(Connection connection, Prietenie prietenie) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("UPDATE friendships SET id1 = ?, id2 = ? WHERE id = ?");
+        PreparedStatement ps = connection.prepareStatement("UPDATE friendships SET id1 = ?, id2 = ?, friends_from = ?, status = ? WHERE id = ?");
         ps.setLong(1, prietenie.getIdPrieten1());
         ps.setLong(2, prietenie.getIdPrieten2());
-        ps.setLong(3, prietenie.getId());
+        ps.setDate(3, Date.valueOf(prietenie.getFriendsFrom().toLocalDate()));
+        ps.setString(4, prietenie.getStatus());
+        ps.setLong(5, prietenie.getId());
+
 
         return ps;
+    }
+
+    public Optional<Prietenie> findOne(Long id1, Long id2) {
+        try(Connection connection = DriverManager.getConnection(super.url, super.username, super.password)){
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM friendships WHERE id1=? AND id2=?");
+            statement.setLong(1, id1);
+            statement.setLong(2, id2);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next())
+            {
+                Prietenie p = createEntity(rs);
+                return Optional.of(p);
+            }
+            return Optional.empty();
+        }
+        catch (SQLException e){
+            return Optional.empty();
+        }
     }
 }

@@ -1,6 +1,6 @@
 package map.utils;
 
-import ubb.scs.map.domain.Tuple;
+import map.domain.Tuple;
 
 import java.util.*;
 

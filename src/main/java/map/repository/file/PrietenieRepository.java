@@ -3,10 +3,10 @@ package map.repository.file;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-import ubb.scs.map.domain.Prietenie;
-import ubb.scs.map.domain.Tuple;
-import ubb.scs.map.domain.exceptions.RepositoryException;
-import ubb.scs.map.domain.validators.Validator;
+import map.domain.Prietenie;
+import map.domain.Tuple;
+import map.domain.exceptions.RepositoryException;
+import map.domain.validators.Validator;
 
 import java.io.File;
 import java.io.IOException;

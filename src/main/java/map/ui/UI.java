@@ -1,11 +1,12 @@
 package map.ui;
 
-import ubb.scs.map.service.Service;
+import map.service.Service;
 
-import java.awt.*;
+//import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 
 public class UI {
     private final Service service;
@@ -38,8 +39,10 @@ public class UI {
         String fname = reader.readLine();
         System.out.println("Introdu numele: ");
         String lname = reader.readLine();
+        System.out.println("Introdu uname: ");
+        String uname = reader.readLine();
 
-        service.addUtilizator(fname, lname);
+        service.addUtilizator(fname, lname, uname, "default");
         WriteMessage("Utilizator adaugat cu succes!", Colors.GREEN);
     }
 
@@ -145,7 +148,7 @@ public class UI {
         System.out.println("Selecteaza id-ul celui de-al doilea utilizator: ");
         Long id2 = Long.valueOf(reader.readLine());
 
-        service.addPrietenie(id1, id2);
+        service.addPrietenie(id1, id2, LocalDateTime.now(), null);
         WriteMessage("Prietenie adaugata cu succes!", Colors.GREEN);
         System.out.println("\n\n");
     }

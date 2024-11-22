@@ -1,0 +1,34 @@
+#main {
+    -fx-background-color: #F5CB5C;
+    -fx-padding: 20;
+}
+
+#label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+#registerButton{
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-text-fill: #007BFF;
+}
+
+#registerButton:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #0E1B9C;
+}
+
+#errorLabel {
+    -fx-text-fill: red;
+}
+
+#button {
+    -fx-background-color: #548687;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+#button:hover {
+    -fx-cursor: hand;
+}

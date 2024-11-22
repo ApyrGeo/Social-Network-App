@@ -1,0 +1,27 @@
+#mainArea {
+    -fx-background-color: #FFFFC7;
+}
+
+#secArea {
+    -fx-background-color: #FFFFC7;
+}
+
+#sidePanel {
+    -fx-background-color: #F5CB5C;
+    -fx-text-fill: #548687;
+}
+
+
+.button:hover{
+    -fx-background-color: #FFFFC7;
+}
+
+.button {
+    -fx-text-fill: #548687;
+    -fx-font-size: 18;
+    -fx-background-color: transparent;
+}
+
+#toggleButton {
+    -fx-font-size: 24px;
+}

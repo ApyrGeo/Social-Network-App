@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="495.0" prefWidth="490.0" stylesheets="@../css/search_user.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="map.controller.SearchUserController">
+   <VBox prefHeight="114.0" prefWidth="490.0">
+      <children>
+          <HBox fx:id="main" alignment="CENTER" spacing="15">
+              <Text fx:id="searchLabel" text="Search:" />
+              <TextField fx:id="searchField" promptText="Enter username: " />
+              <Button fx:id="searchButton" onAction="#handleSearch" text="Search" />
+          </HBox>
+         <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <Label fx:id="error" prefHeight="29.0" prefWidth="487.0" visible="false" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+            </children>
+         </AnchorPane>
+      </children>
+   </VBox>
+   <AnchorPane fx:id="suggestionArea" layoutY="104.0" prefHeight="394.0" prefWidth="490.0">
+       <children>
+
+       </children>
+   </AnchorPane>
+
+</AnchorPane>

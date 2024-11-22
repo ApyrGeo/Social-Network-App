@@ -4,6 +4,7 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+    //id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group 'com.example'
@@ -25,8 +26,7 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'com.example.socialmediaapp'
-    mainClass = 'com.example.socialmediaapp.HelloApplication'
+    mainClass = 'java.map.HelloApplication'
 }
 
 javafx {
@@ -38,6 +38,15 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20240303'
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0")
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
+
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.7.4")
+
 }
 
 test {

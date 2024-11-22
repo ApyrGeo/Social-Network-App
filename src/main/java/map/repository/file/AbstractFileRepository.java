@@ -1,10 +1,10 @@
 package map.repository.file;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ubb.scs.map.domain.Entity;
-import ubb.scs.map.domain.exceptions.RepositoryException;
-import ubb.scs.map.domain.validators.Validator;
-import ubb.scs.map.repository.memory.InMemoryRepository;
+import map.domain.Entity;
+import map.domain.exceptions.RepositoryException;
+import map.domain.validators.Validator;
+import map.repository.memory.InMemoryRepository;
 
 import java.io.*;
 import java.util.List;

@@ -7,7 +7,7 @@ import java.util.Optional;
 public class UtilizatorExtended extends Utilizator {
     private List<Utilizator> prieteni;
     public UtilizatorExtended(Optional<Utilizator> utilizator, List<Utilizator> prieteni) {
-        super(utilizator.get().getFirstName(), utilizator.get().getLastName());
+        super(utilizator.get().getFirstName(), utilizator.get().getLastName(), utilizator.get().getUname());
         super.setId(utilizator.get().getId());
         this.prieteni = prieteni;
     }

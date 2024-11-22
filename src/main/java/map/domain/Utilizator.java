@@ -12,11 +12,26 @@ public class Utilizator extends Entity<Long>{
     @JsonProperty("last_name")
     protected String lastName;
 
+    protected String uname;
+
+    protected String password;
+
     private Utilizator(){}
 
-    public Utilizator(String firstName, String lastName) {
+    public Utilizator(String firstName, String lastName, String uname) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.uname = uname;
+        this.password = null;
+    }
+    public Utilizator(String firstName, String lastName, String uname, String pass) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.uname = uname;
+        this.password = pass;
+    }
+    public String getUname() {
+        return uname;
     }
 
     public String getFirstName() {
@@ -52,5 +67,9 @@ public class Utilizator extends Entity<Long>{
     @Override
     public int hashCode() {
         return Objects.hash(getFirstName(), getLastName());
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

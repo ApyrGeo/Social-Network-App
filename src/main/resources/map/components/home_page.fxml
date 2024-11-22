@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="main" minHeight="200.0" prefHeight="400.0" prefWidth="389.0" stylesheets="@../css/home_page.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="map.controller.HomePageController">
+
+    <Label fx:id="title" prefHeight="50.0" prefWidth="400.0" />
+    <AnchorPane fx:id="parent" layoutY="67.0" prefHeight="333.0" prefWidth="396.0">
+        <ListView fx:id="list" prefHeight="400.0" prefWidth="423.0" AnchorPane.leftAnchor="0.0" />
+    </AnchorPane>
+</AnchorPane>

@@ -1,6 +1,6 @@
 package map.domain.validators;
 
-import ubb.scs.map.domain.exceptions.ValidationException;
+import map.domain.exceptions.ValidationException;
 
 public interface Validator<T> {
     void validate(T entity) throws ValidationException;

@@ -1,0 +1,42 @@
+#name {
+    -fx-font-size: 16;
+    /*-fx-background-color: #FFFFC7; 548687*/
+}
+
+#name:pressed{
+    -fx-text-fill: black;
+}
+
+.button {
+    /*-fx-background-color: #548687;*/
+    -fx-background-radius: 15;
+    -fx-text-fill: black;
+
+}
+
+
+
+#hbox {
+    -fx-background-color: #F5CB5C8B;
+    -fx-background-radius: 20;
+}
+
+#accept {
+    -fx-background-image: url("https://icons.iconarchive.com/icons/steve/zondicons/128/Checkmark-icon.png");
+    -fx-background-size: 20 20;
+    -fx-background-color: #38f435A0;
+}
+#accept:pressed {
+    -fx-background-color: #38f435;
+}
+
+#decline {
+    -fx-background-image: url("https://icons.iconarchive.com/icons/github/octicons/128/x-16-icon.png");
+    -fx-background-size: 20 20;
+    -fx-background-color: #f44f35A0;
+}
+
+#decline:pressed {
+    -fx-background-color: #f44f35;
+}
+

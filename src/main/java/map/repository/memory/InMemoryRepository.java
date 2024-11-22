@@ -1,10 +1,10 @@
 package map.repository.memory;
 
-import ubb.scs.map.domain.Entity;
-import ubb.scs.map.domain.exceptions.RepositoryException;
-import ubb.scs.map.domain.exceptions.ValidationException;
-import ubb.scs.map.domain.validators.Validator;
-import ubb.scs.map.repository.Repository;
+import map.domain.Entity;
+import map.domain.exceptions.RepositoryException;
+import map.domain.exceptions.ValidationException;
+import map.domain.validators.Validator;
+import map.repository.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
