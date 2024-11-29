@@ -1,6 +1,7 @@
 package map.repository.database;
 
 import map.domain.Entity;
+import map.domain.FriendshipStatus;
 import map.domain.Prietenie;
 import map.domain.Utilizator;
 import map.domain.validators.PrietenieValidator;
@@ -8,6 +9,8 @@ import map.domain.validators.Validator;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
@@ -24,7 +27,13 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
         LocalDateTime frFrom = rs.getDate(4).toLocalDate().atTime(0,0,0);
         String status = rs.getString(5);
 
-        Prietenie prietenie = new Prietenie(id1, id2, frFrom, status);
+        FriendshipStatus friendshipStatus = null;
+        switch(status){
+            case "DONE": {friendshipStatus = FriendshipStatus.DONE;break;}
+            case "PENDING": {friendshipStatus = FriendshipStatus.PENDING;break;}
+            case "REJECTED": {friendshipStatus = FriendshipStatus.REJECTED;break;}
+        }
+        Prietenie prietenie = new Prietenie(id1, id2, frFrom, friendshipStatus);
         prietenie.setId(id);
         return prietenie;
     }
@@ -49,7 +58,7 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
         ps.setLong(1, prietenie.getIdPrieten1());
         ps.setLong(2, prietenie.getIdPrieten2());
         ps.setDate(3, Date.valueOf(prietenie.getFriendsFrom().toLocalDate()));
-        ps.setString(4, prietenie.getStatus());
+        ps.setString(4, prietenie.getStatus().toString());
 
         return ps;
     }
@@ -68,7 +77,7 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
         ps.setLong(1, prietenie.getIdPrieten1());
         ps.setLong(2, prietenie.getIdPrieten2());
         ps.setDate(3, Date.valueOf(prietenie.getFriendsFrom().toLocalDate()));
-        ps.setString(4, prietenie.getStatus());
+        ps.setString(4, prietenie.getStatus().toString());
         ps.setLong(5, prietenie.getId());
 
 
@@ -93,4 +102,6 @@ public class PrietenieDbRepository extends AbstractDbRepository<Prietenie>{
             return Optional.empty();
         }
     }
+
+
 }

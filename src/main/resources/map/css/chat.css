@@ -1,0 +1,15 @@
+#scrollPane {
+    -fx-background: #FFFFC7;
+    -fx-border-color: #FFFFC7;
+}
+
+#button {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-background-color: #F5CB5C;
+}
+
+#button:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #F5CB5C90;
+}

@@ -8,9 +8,9 @@ public class UtilizatorPrietenieDTO {
     private String uname;
     private Long idUser1, idUser2;
     private LocalDateTime from;
-    private String status;
+    private FriendshipStatus status;
 
-    public UtilizatorPrietenieDTO(Utilizator u, Long idUser1, Long idUser2, LocalDateTime from, String status) {
+    public UtilizatorPrietenieDTO(Utilizator u, Long idUser1, Long idUser2, LocalDateTime from, FriendshipStatus status) {
         fullName = u.getFirstName() + " " + u.getLastName();
         uname = u.getUname();
         this.idUser1 = idUser1;
@@ -34,7 +34,7 @@ public class UtilizatorPrietenieDTO {
     public LocalDateTime getFrom() {
         return from;
     }
-    public String getStatus() {
+    public FriendshipStatus getStatus() {
         return status;
     }
 

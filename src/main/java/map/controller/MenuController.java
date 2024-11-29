@@ -3,23 +3,34 @@ package map.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import map.domain.FriendshipStatus;
+import map.domain.Prietenie;
 import map.domain.UtilizatorExtended;
 import map.service.Service;
+import map.utils.events.ChangeEventType;
+import map.utils.events.EntityChangeEvent;
+import map.utils.observer.Observer;
 
 import java.io.IOException;
+import java.util.Objects;
 
-public class MenuController {
+public class MenuController implements Observer<EntityChangeEvent> {
 
     public Button home;
     public Button addfriend;
     public Button requests;
     public BorderPane mainArea;
+    public Circle notification;
+    public Button messages;
     @FXML
     private VBox sidePanel;
     @FXML
@@ -28,6 +39,8 @@ public class MenuController {
     private SplitPane splitPane;
 
     private boolean isPanelExpanded = false;
+    private boolean hasNotification = false;
+
     private Service service;
     private UtilizatorExtended mainUser;
     private Scene scene;
@@ -52,12 +65,17 @@ public class MenuController {
         home.setVisible(false);
         addfriend.setVisible(false);
         requests.setVisible(false);
+        notification.setVisible(false);
+        messages.setVisible(false);
     }
 
     private void revealText() {
         home.setVisible(true);
         addfriend.setVisible(true);
         requests.setVisible(true);
+        messages.setVisible(true);
+        if(hasNotification)
+            notification.setVisible(true);
     }
 
     @FXML
@@ -132,9 +150,8 @@ public class MenuController {
 
             mainArea.setCenter(newPage);
 
-
-
             toggleOpenClose();
+            hasNotification = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,6 +159,7 @@ public class MenuController {
 
     public void setService(Service service) {
         this.service = service;
+        service.addObserver(this);
     }
 
     public void setMainUser(UtilizatorExtended u) {
@@ -154,4 +172,53 @@ public class MenuController {
     }
 
 
+    @Override
+    public void update(EntityChangeEvent event) {
+        if(!(event.getData() instanceof Prietenie)) return;
+
+        Prietenie p = (Prietenie) event.getData();
+
+        if(event.getType() == ChangeEventType.UPDATE) {
+            if(Objects.equals(p.getIdPrieten2(), mainUser.getId()) && Objects.equals(p.getStatus(), FriendshipStatus.PENDING)){
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Information");
+                a.setHeaderText(mainUser.getUname());
+                a.setContentText("Ai primit o cerere de prietenie");
+                a.showAndWait();
+
+                hasNotification = true;
+            }
+        }
+        else if(event.getType() == ChangeEventType.ADD){
+            if(Objects.equals(p.getIdPrieten2(), mainUser.getId())){
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Information");
+                a.setHeaderText(mainUser.getUname());
+                a.setContentText("Ai primit o cerere de prietenie");
+                a.showAndWait();
+
+                hasNotification = true;
+            }
+        }
+
+    }
+
+    public void handleMessages(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../components/chat.fxml"));
+            Parent newPage = loader.load();
+
+            ChatController c = loader.getController();
+            c.setService(service);
+            c.setMainUtilizator(mainUser);
+
+            c.init();
+
+            mainArea.setCenter(newPage);
+
+            toggleOpenClose();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

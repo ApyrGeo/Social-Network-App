@@ -1,6 +1,7 @@
 package map.utils.events;
 
 import map.domain.Entity;
+import map.domain.Message;
 import map.domain.Prietenie;
 import map.domain.Utilizator;
 
@@ -13,6 +14,11 @@ public class EntityChangeEvent implements Event {
         this.data = data;
     }
     public EntityChangeEvent(ChangeEventType type, Utilizator data) {
+        this.type = type;
+        this.data = data;
+    }
+
+    public EntityChangeEvent(ChangeEventType type, Message data) {
         this.type = type;
         this.data = data;
     }

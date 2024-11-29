@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import map.domain.FriendshipStatus;
 import map.domain.UtilizatorExtended;
 import map.domain.UtilizatorPrietenieDTO;
 import map.service.Service;
@@ -40,8 +41,10 @@ public class HomePageController implements Observer<EntityChangeEvent> {
     }
 
     private void AddToListViewNormal() {
+        all_friendships.clear();
+
         service.getFriendships().forEach(p -> {
-            if (Objects.equals(p.getStatus(), "done") && Objects.equals(div_type, "normal")) {
+            if (Objects.equals(p.getStatus(), FriendshipStatus.DONE) && Objects.equals(div_type, "normal")) {
                 if (Objects.equals(p.getIdPrieten1(), mainUser.getId()))
                     all_friendships.add(new UtilizatorPrietenieDTO(service.getUtilizator(p.getIdPrieten2()), p.getIdPrieten1(), p.getIdPrieten2(), p.getFriendsFrom(), p.getStatus()));
 
@@ -54,15 +57,17 @@ public class HomePageController implements Observer<EntityChangeEvent> {
     }
 
     private void AddToListViewRequests() {
+        all_friendships.clear();
+
         service.getFriendships().forEach(p -> {
-            if((Objects.equals(p.getStatus(), "pending")) && Objects.equals(div_type, "requests")) {
+            if((Objects.equals(p.getStatus(), FriendshipStatus.PENDING)) && Objects.equals(div_type, "requests")) {
                 if(Objects.equals(p.getIdPrieten2(), mainUser.getId())) {
                     all_friendships.add(new UtilizatorPrietenieDTO(service.getUtilizator(p.getIdPrieten1()), p.getIdPrieten2(), p.getIdPrieten1(), p.getFriendsFrom(), p.getStatus()));
                 }
             }
         });
         service.getFriendships().forEach(p -> {
-            if((Objects.equals(p.getStatus(), "rejected")) && Objects.equals(div_type, "requests")) {
+            if((Objects.equals(p.getStatus(), FriendshipStatus.REJECTED)) && Objects.equals(div_type, "requests")) {
                 if(Objects.equals(p.getIdPrieten2(), mainUser.getId())) {
                     all_friendships.add(new UtilizatorPrietenieDTO(service.getUtilizator(p.getIdPrieten1()), p.getIdPrieten2(), p.getIdPrieten1(), p.getFriendsFrom(), p.getStatus()));
                 }
@@ -89,6 +94,7 @@ public class HomePageController implements Observer<EntityChangeEvent> {
 
 
     public void init() {
+
         if(Objects.equals(div_type, "normal")){
             title.setText("Lista prieteni:");
             AddToListViewNormal();

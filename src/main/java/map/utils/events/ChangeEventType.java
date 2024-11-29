@@ -1,7 +1,7 @@
 package map.utils.events;
 
 public enum ChangeEventType {
-    ADD, UPDATE, DELETE
+    ADD, UPDATE, DELETE, MESSAGE_SENT
 }
 
 //public final class ChangeEventType{;

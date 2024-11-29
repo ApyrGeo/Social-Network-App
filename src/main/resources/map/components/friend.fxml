@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="main" onMouseClicked="#handleClick" prefHeight="39.0" prefWidth="143.0" spacing="10" stylesheets="@../css/friend.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="map.controller.FriendController">
+
+    <Text fx:id="name" text="" />
+    
+   <AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="107.0">
+      <children>
+          <Button fx:id="button" onAction="#handleButtonClick" text="+" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" />
+
+      </children>
+      <HBox.margin>
+         <Insets left="50.0" />
+      </HBox.margin>
+   </AnchorPane>
+   <padding>
+      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+   </padding>
+</HBox>

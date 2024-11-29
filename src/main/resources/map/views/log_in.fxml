@@ -5,7 +5,7 @@
 
 <GridPane fx:id="main" alignment="center" hgap="10"
           stylesheets="@../css/log_in.css" vgap="10"
-          xmlns="http://javafx.com/javafx/17.0.12"
+          xmlns="http://javafx.com/javafx/17.0.6"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="map.controller.LogInController">
 

@@ -6,9 +6,7 @@ import map.domain.validators.Validator;
 import map.repository.Repository;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class UtilizatorDbRepository extends AbstractDbRepository<Utilizator> {
 
@@ -39,7 +37,7 @@ public class UtilizatorDbRepository extends AbstractDbRepository<Utilizator> {
 
     @Override
     public PreparedStatement findAllStatement(Connection connection) throws SQLException {
-        return connection.prepareStatement("SELECT * FROM users");
+        return connection.prepareStatement("SELECT * FROM users ORDER BY uname");
     }
 
     @Override
@@ -107,6 +105,32 @@ public class UtilizatorDbRepository extends AbstractDbRepository<Utilizator> {
         }
         catch (SQLException e){
             return Optional.empty();
+        }
+    }
+
+    public List<Utilizator> findFriends(Long id_user) {
+        List<Utilizator> prieteni = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(super.url, super.username, super.password)){
+            PreparedStatement statement = connection.prepareStatement(
+                    """
+                        (SELECT U.id, U.first_name, U.last_name, U.uname, U.password FROM users U JOIN friendships F ON F.id2 = U.id WHERE F.id1 = ?
+                        UNION
+                        SELECT U.id, U.first_name, U.last_name, U.uname, U.password FROM users U JOIN friendships F ON F.id1 = U.id WHERE F.id2 = ?)
+                        ORDER BY uname
+                       """);
+            statement.setLong(1, id_user);
+            statement.setLong(2, id_user);
+
+            ResultSet rs = statement.executeQuery();
+            while(rs.next())
+            {
+                Utilizator u = createEntity(rs);
+                prieteni.add(u);
+            }
+            return prieteni;
+        }
+        catch (SQLException e){
+            return null;
         }
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import map.domain.FriendshipStatus;
 import map.domain.Prietenie;
 import map.domain.Utilizator;
 import map.domain.UtilizatorExtended;
@@ -34,6 +35,8 @@ public class SearchUserController implements Observer<EntityChangeEvent> {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../components/home_page.fxml"));
         AnchorPane newPane = loader.load();
 
+        service.addObserver(this);
+
         homePageController = loader.getController();
         homePageController.setDivType("all");
         homePageController.setService(service);
@@ -50,19 +53,20 @@ public class SearchUserController implements Observer<EntityChangeEvent> {
     private Predicate<UtilizatorExtended> createPredicate(){
         Predicate<UtilizatorExtended> p1 = u -> u.getUname().startsWith(searchField.getText());
         Predicate<UtilizatorExtended> p2 = u -> {
+            muser = service.getUtilizator(muser.getId());
             if(Objects.equals(u.getId(), muser.getId())) return false;
 
             else if(muser.getPrieteni().contains(u)){
                 try {
                     Prietenie p = service.getPrietenie(muser.getId(), u.getId());
-                    return Objects.equals(p.getStatus(), "rejected");
+                    return Objects.equals(p.getStatus(), FriendshipStatus.REJECTED);
 
                 }catch (ServiceException e) {
                     //pass
                 }
                 try{
                     Prietenie p = service.getPrietenie(u.getId(), muser.getId());
-                    return Objects.equals(p.getStatus(), "rejected");
+                    return Objects.equals(p.getStatus(), FriendshipStatus.REJECTED);
                 } catch (ServiceException e) {
                     return true;
                 }
@@ -79,33 +83,34 @@ public class SearchUserController implements Observer<EntityChangeEvent> {
     }
 
     public void handleSearch(ActionEvent actionEvent) {
-        Utilizator user;
-        try{
-            user = service.getUtilizator(searchField.getText());
-        }catch(ServiceException e) {
-            error.setVisible(true);
-            error.setText(e.getMessage());
-            return;
-        }
-
-        try {
-            service.addPrietenie(muser.getId(), user.getId(), LocalDateTime.now(), "pending");
-        } catch (ServiceException e) {
-            Prietenie existing = service.getPrietenie(muser.getId(), user.getId());
-            if (Objects.equals(existing.getStatus(), "done"))
-            {
-                error.setVisible(true);
-                error.setText("Prietenia exista deja!");
-                return;
-            }
-            else
-                service.updatePrietenie(existing.getId(), muser.getId(), user.getId(), "pending");
-        }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setContentText("Cerere de prietenie trimisa!");
-        alert.showAndWait();
+        return;
+//        Utilizator user;
+//        try{
+//            user = service.getUtilizator(searchField.getText());
+//        }catch(ServiceException e) {
+//            error.setVisible(true);
+//            error.setText(e.getMessage());
+//            return;
+//        }
+//
+//        try {
+//            service.addPrietenie(muser.getId(), user.getId(), LocalDateTime.now(), "pending");
+//        } catch (ServiceException e) {
+//            Prietenie existing = service.getPrietenie(muser.getId(), user.getId());
+//            if (Objects.equals(existing.getStatus(), "done"))
+//            {
+//                error.setVisible(true);
+//                error.setText("Prietenia exista deja!");
+//                return;
+//            }
+//            else
+//                service.updatePrietenie(existing.getId(), muser.getId(), user.getId(), "pending");
+//        }
+//
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Information");
+//        alert.setContentText("Cerere de prietenie trimisa!");
+//        alert.showAndWait();
 
     }
 
@@ -120,5 +125,6 @@ public class SearchUserController implements Observer<EntityChangeEvent> {
     @Override
     public void update(EntityChangeEvent event) {
         handleFilter();
+        System.out.println("OBSERVER");
     }
 }

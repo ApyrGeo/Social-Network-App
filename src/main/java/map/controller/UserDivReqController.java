@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
-import map.domain.Prietenie;
-import map.domain.Utilizator;
-import map.domain.UtilizatorExtended;
-import map.domain.UtilizatorPrietenieDTO;
+import map.domain.*;
 import map.service.Service;
 
 import java.util.Objects;
@@ -22,7 +19,7 @@ public class UserDivReqController {
     private Long muserId;
     private Service service;
     private Long userId;
-    private String status;
+    private FriendshipStatus status;
 
     private void disableControls() {
         accept.setDisable(true);
@@ -47,7 +44,7 @@ public class UserDivReqController {
     }
 
     public void setPendingDeclined() {
-        if(Objects.equals(status, "rejected")) {
+        if(Objects.equals(status, FriendshipStatus.REJECTED)) {
             circle.setStyle("-fx-fill: red ;");
             disableControls();
         }
@@ -60,7 +57,7 @@ public class UserDivReqController {
     public void handleAccept(ActionEvent actionEvent) {
         Prietenie wanted = service.getPrietenie(userId, muserId);
 
-        service.updatePrietenie(wanted.getId(), wanted.getIdPrieten1(), wanted.getIdPrieten2(), "done");
+        service.updatePrietenie(wanted.getId(), wanted.getIdPrieten1(), wanted.getIdPrieten2(), FriendshipStatus.DONE);
 
     }
 
@@ -71,6 +68,6 @@ public class UserDivReqController {
     public void handleDecline(ActionEvent actionEvent) {
         Prietenie wanted = service.getPrietenie(userId, muserId);
 
-        service.updatePrietenie(wanted.getId(), wanted.getIdPrieten1(), wanted.getIdPrieten2(), "rejected");
+        service.updatePrietenie(wanted.getId(), wanted.getIdPrieten1(), wanted.getIdPrieten2(), FriendshipStatus.REJECTED);
     }
 }

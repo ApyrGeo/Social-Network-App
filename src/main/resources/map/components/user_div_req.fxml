@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane fx:id="hbox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" stylesheets="@../css/user_div.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="map.controller.UserDivReqController">
+<AnchorPane fx:id="hbox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" stylesheets="@../css/user_div.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="map.controller.UserDivReqController">
 <children>
     <Circle fx:id="circle" fill="#1f93ff94" radius="10.0" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
     <Label fx:id="name" layoutX="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="176.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" />

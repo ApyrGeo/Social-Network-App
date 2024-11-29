@@ -10,12 +10,12 @@ public class Prietenie extends Entity<Long>{
     @JsonProperty("id2")
     private Long idPrieten2;
 
-    private String status;
+    private FriendshipStatus status;
     private LocalDateTime friendsFrom;
 
     private Prietenie() {}
 
-    public Prietenie(Long id1, Long id2, LocalDateTime friendsFrom, String status) {
+    public Prietenie(Long id1, Long id2, LocalDateTime friendsFrom, FriendshipStatus status) {
         idPrieten1 = id1;
         idPrieten2 = id2;
         this.status = status;
@@ -29,7 +29,7 @@ public class Prietenie extends Entity<Long>{
 
         return idPrieten2;
     }
-    public String getStatus() {
+    public FriendshipStatus getStatus() {
         return status;
     }
     public LocalDateTime getFriendsFrom() {

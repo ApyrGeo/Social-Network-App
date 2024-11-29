@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import map.controller.LogInController;
+import map.domain.validators.MessageValidator;
 import map.domain.validators.PrietenieValidator;
 import map.domain.validators.UtilizatorValidator;
+import map.repository.database.MessageDBRepository;
 import map.repository.database.PrietenieDbRepository;
 import map.repository.database.UtilizatorDbRepository;
 import map.service.Service;
@@ -45,7 +47,12 @@ public class HelloApplication extends Application {
                 new PrietenieDbRepository("jdbc:postgresql://localhost:5432/socialnetwork",
                         "postgres",
                         "Injection17_DROP_TABLE",
-                        new PrietenieValidator()));
+                        new PrietenieValidator()),
+                new MessageDBRepository("jdbc:postgresql://localhost:5432/socialnetwork",
+                "postgres",
+                "Injection17_DROP_TABLE",
+                new MessageValidator())
+        );
 
         return s;
     }

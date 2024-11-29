@@ -8,6 +8,7 @@ import map.domain.Prietenie;
 import map.domain.UtilizatorPrietenieDTO;
 import map.domain.exceptions.ServiceException;
 import map.service.Service;
+import map.utils.Constants;
 
 public class UserDivNormalController{
     public Label name;
@@ -22,7 +23,7 @@ public class UserDivNormalController{
     public void setDTO(UtilizatorPrietenieDTO u) {
         muserId = u.getIdUser1();
         userId = u.getIdUser2();
-        name.setText(u.getFullName());
+        name.setText(u.getFullName() + "-Friends since: " + u.getFrom().format(Constants.DATE_FORMATTER));
         setCircleColor("#FFFFFF");
     }
 

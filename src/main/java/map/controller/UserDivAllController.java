@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
+import map.domain.FriendshipStatus;
 import map.domain.Prietenie;
 import map.domain.UtilizatorExtended;
 import map.domain.exceptions.ServiceException;
@@ -37,7 +38,7 @@ public class UserDivAllController {
 
     public void handleAdd(ActionEvent actionEvent) {
         try {
-            service.addPrietenie(muser.getId(), user.getId(), LocalDateTime.now(), "pending");
+            service.addPrietenie(muser.getId(), user.getId(), LocalDateTime.now(), FriendshipStatus.PENDING);
 
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Info");
@@ -47,8 +48,8 @@ public class UserDivAllController {
 
         } catch (ServiceException e) {
             Prietenie existing = service.getPrietenie(muser.getId(), user.getId());
-            if (!Objects.equals(existing.getStatus(), "done")) {
-                service.updatePrietenie(existing.getId(), muser.getId(), user.getId(), "pending");
+            if (!Objects.equals(existing.getStatus(), FriendshipStatus.DONE)) {
+                service.updatePrietenie(existing.getId(), muser.getId(), user.getId(), FriendshipStatus.PENDING);
 
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setTitle("Info");

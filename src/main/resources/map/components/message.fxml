@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="main" alignment="TOP_LEFT" onMouseClicked="#handleReply" spacing="10" style="-fx-padding: 5; -fx-background-color: transparent;" stylesheets="@../css/messages.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="map.controller.MessageController">
+
+    <VBox fx:id="container" spacing="5">
+
+
+        <VBox fx:id="messageBubble" spacing="10" style="-fx-background-color: #548687; -fx-padding: 10; -fx-background-radius: 15; -fx-max-width: 400px;">
+
+            <Text fx:id="name" text="M" />
+            <Text fx:id="text" style="-fx-font-size: 14px;" text="merge" wrappingWidth="300" />
+            <Text fx:id="date" style="-fx-font-size: 8" />
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+        </VBox>
+    </VBox>
+</HBox>

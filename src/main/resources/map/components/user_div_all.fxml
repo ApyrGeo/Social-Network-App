@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.shape.Circle?>
-<AnchorPane fx:id="hbox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" stylesheets="@../css/user_div.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="hbox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" stylesheets="@../css/user_div.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="map.controller.UserDivAllController">
     <children>
         <Circle fx:id="circle" fill="#1f93ff94" radius="10.0" stroke="TRANSPARENT" strokeType="INSIDE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />

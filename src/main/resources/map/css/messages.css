@@ -1,0 +1,22 @@
+#main {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+#container {
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-background-color: #F5CB5C;
+}
+
+#text {
+    -fx-fill: white;
+    -fx-font-size: 12;
+}
+
+#name {
+    -fx-font-weight: bold;
+    -fx-fill: #FFFFC7;
+    -fx-font-size: 18;
+}

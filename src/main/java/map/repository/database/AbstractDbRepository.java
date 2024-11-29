@@ -70,7 +70,6 @@ public abstract class AbstractDbRepository <E extends Entity<Long>> implements R
         try(Connection connection = DriverManager.getConnection(url, username, password);
             PreparedStatement statement = saveStatement(connection, entity) //connection.prepareStatement("INSERT INTO friendships(id1, id2) VALUES(?,?)");
         ){
-
             int rez = statement.executeUpdate();
             return Optional.empty();
         } catch (SQLException e) {

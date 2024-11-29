@@ -1,0 +1,28 @@
+#button {
+    -fx-font-size: 14px;
+    -fx-background-color: #548687;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+#button:hover {
+    -fx-background-color: #54868780;
+}
+
+#name {
+    -fx-fill: black;
+    -fx-font-size: 20;
+}
+
+#main {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-fill: #F5CB5C;
+    -fx-background-color: #F5CB5C;
+    -fx-padding: 5; -fx-cursor: hand;
+}
+
+#main:hover {
+    -fx-cursor: hand;
+}
